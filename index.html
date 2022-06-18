@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css">
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js"></script>
+
+<div class="container">
+    <br>
+    <div class="jumbotron">
+        <h2 class="display-5">Send Message</h2>
+        <br>
+        <input id="name" class="form-control" placeholder="Name">
+        <br>
+        <textarea id="message" class="form-control" placeholder="Message"></textarea>
+        <br>
+        <button id="send" class="btn btn-info">Send</button>
+    </div>
+    <div id="messages">
+
+    </div>
+</div>
+<script>
+    $(() => {
+        $("#send").click(()=>{
+            var message = {name: $("#name").val(), message:$("#message").val()};
+            postMessage(message);
+        });
+        getMessages();
+    });
+
+    function addMessages(message){
+        $("#messages").append(`<h3> ${message.name} </h3> <p> ${message.message} </p>`);
+    }
+
+    function getMessages(){
+        $.get('http://localhost:3000/messages', (data)=>{
+            data.forEach(addMessages);
+        });
+    }
+
+    function postMessage(message){
+        $.post('http://localhost:3000/messages', message);
+    }
+</script>
