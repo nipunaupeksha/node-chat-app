@@ -40,9 +40,9 @@ app.post('/messages', async (req, res) => {
             io.emit('message', req.body);
         }
         res.sendStatus(200);
-    } catch (err) {
+    } catch (error) {
         res.sendStatus(500);
-        return console.log(err);
+        return console.log(error);
     }
 });
 
